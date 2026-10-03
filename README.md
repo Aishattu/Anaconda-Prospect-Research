@@ -2,7 +2,7 @@
 
 Paste a LinkedIn URL. Get the prospect's profile, verified work email, an AI-written summary and outreach angle, and a clear verdict on whether their company is a good fit for Anaconda. Then save it all to HubSpot in one click.
 
-**Live demo:** [anaconda-prospect-research.vercel.app](https://anaconda-prospect-research.vercel.app)
+**Live demo:**
 
 ## The problem
 
