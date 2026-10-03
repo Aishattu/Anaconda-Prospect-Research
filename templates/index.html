@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Anaconda Prospect Research</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  /* Anaconda brand palette (from anaconda.com's theme colors) */
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f7f8f9;
+    --panel: #ffffff;
+    --border: #e4e6eb;
+    --text: #0c0c0c;
+    --text-2: #2c2d30;
+    --muted: #6a6d74;
+    --muted-2: #8c8f96;
+    --lime: #c1ff60;
+    --lime-soft: #deffaa;
+    --lime-tint: #f3ffe0;
+    --green: #08ca4a;
+    --green-dark: #068f35;
+    --green-deep: #035420;
+    --amber: #a16207;
+    --amber-tint: #fef7e0;
+    --red: #d00100;
+    --red-tint: #fdecec;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg-soft);
+    color: var(--text);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh;
+  }
+  h1, .brand, .profile-name { font-family: "Space Grotesk", "Inter", sans-serif; }
+
+  /* ---------- top nav ---------- */
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 40px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; }
+  .brand-mark {
+    width: 32px; height: 32px; border-radius: 999px;
+    background: var(--lime); color: var(--green-deep);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 700;
+  }
+  .brand-sub { color: var(--muted); font-weight: 500; }
+  .nav-tag {
+    color: var(--green-deep); font-size: 12px; font-weight: 600;
+    background: var(--lime-tint); border: 1px solid var(--lime);
+    padding: 6px 14px; border-radius: 999px;
+  }
+
+  /* ---------- layout ---------- */
+  .wrap { max-width: 720px; margin: 0 auto; padding: 56px 24px 80px; }
+  .hero { margin-bottom: 32px; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--green-dark); font-size: 12px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px;
+  }
+  .eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
+  h1 { font-size: 36px; font-weight: 700; margin: 0 0 10px; letter-spacing: -0.02em; }
+  h1 .accent { background: linear-gradient(transparent 60%, var(--lime) 60%); padding: 0 2px; }
+  .subtitle { color: var(--muted); font-size: 15px; line-height: 1.6; max-width: 580px; margin: 0; }
+
+  /* ---------- search card ---------- */
+  .search-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px;
+    margin-top: 28px;
+    box-shadow: 0 10px 30px -18px rgba(12,12,12,0.18);
+  }
+  .field-label {
+    font-size: 12px; font-weight: 600; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;
+  }
+  .search-row { display: flex; gap: 10px; }
+  input[type="text"] {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 13px 20px;
+    color: var(--text);
+    font-size: 14px;
+    font-family: inherit;
+  }
+  input[type="text"]::placeholder { color: var(--muted-2); }
+  input[type="text"]:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px var(--lime-soft); }
+  button {
+    border: none;
+    border-radius: 999px;
+    padding: 13px 26px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: transform 0.1s ease, background 0.15s ease;
+  }
+  button:active { transform: scale(0.97); }
+  #research-btn { background: var(--lime); color: var(--text); white-space: nowrap; }
+  #research-btn:hover { background: #b2f74a; }
+  #research-btn:disabled { opacity: 0.55; cursor: default; }
+  .hint { color: var(--muted-2); font-size: 12px; margin-top: 10px; }
+
+  #status { color: var(--muted); font-size: 13px; margin: 18px 2px 0; }
+  #error {
+    color: var(--red); background: var(--red-tint); border: 1px solid rgba(208,1,0,0.2);
+    font-size: 13px; margin-top: 18px; padding: 12px 14px; border-radius: 10px; display: none;
+  }
+
+  /* ---------- empty state ---------- */
+  .empty-state {
+    margin-top: 28px;
+    border: 1px dashed #c9ccd5;
+    border-radius: 20px;
+    padding: 44px 24px;
+    text-align: center;
+    color: var(--muted);
+    background: var(--bg);
+  }
+  .empty-state .glyph {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--lime-tint); color: var(--green-dark);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; margin: 0 auto 14px;
+  }
+  .empty-state p { margin: 0; font-size: 13px; }
+  .empty-state.hidden { display: none; }
+
+  /* ---------- result card ---------- */
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px;
+    margin-top: 28px;
+    display: none;
+    box-shadow: 0 10px 30px -18px rgba(12,12,12,0.18);
+  }
+  .card.visible { display: block; animation: rise 0.35s ease; }
+  @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  .profile-header { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-bottom: 20px; }
+  .avatar {
+    width: 50px; height: 50px; border-radius: 999px;
+    background: var(--lime); color: var(--green-deep);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 16px;
+  }
+  .profile-name { font-size: 20px; font-weight: 700; margin: 0; }
+  .profile-sub { color: var(--muted); font-size: 13px; margin: 3px 0 0; }
+  .badge {
+    margin-left: auto; background: var(--lime-tint); color: var(--green-deep);
+    font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 999px;
+    border: 1px solid var(--lime); white-space: nowrap;
+  }
+
+  .rows { border-top: 1px solid var(--border); padding-top: 16px; margin-bottom: 18px; display: grid; gap: 4px; }
+  .row { display: flex; gap: 10px; font-size: 13.5px; padding: 7px 0; color: var(--text-2); }
+  .row .icon { color: var(--muted-2); width: 18px; flex-shrink: 0; }
+
+  .box { background: var(--bg-soft); border: 1px solid var(--border); border-radius: 12px; padding: 15px; margin-bottom: 12px; font-size: 13.5px; line-height: 1.6; color: var(--text-2); }
+  .box-label {
+    display: flex; align-items: center; gap: 6px;
+    color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; font-weight: 600;
+  }
+  .outreach-box { background: var(--lime-tint); border: 1px solid var(--lime); }
+  .outreach-box .box-label { color: var(--green-deep); }
+
+  /* ---------- qualification ---------- */
+  .qual-box { background: var(--bg); }
+  .qual-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+  .qual-head .box-label { margin-bottom: 0; }
+  .verdict { font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 999px; white-space: nowrap; border: 1px solid; }
+  .verdict.qualified { color: var(--green-deep); background: var(--lime); border-color: var(--lime); }
+  .verdict.not_qualified { color: var(--red); background: var(--red-tint); border-color: rgba(208,1,0,0.25); }
+  .verdict.incomplete { color: var(--amber); background: var(--amber-tint); border-color: rgba(161,98,7,0.25); }
+  .check { padding: 10px 0; border-top: 1px solid var(--border); }
+  .check-title { display: flex; justify-content: space-between; gap: 10px; font-weight: 600; font-size: 13px; color: var(--text); }
+  .check-title .check-result { text-align: right; }
+  .check-result.pass { color: var(--green-dark); }
+  .check-result.fail { color: var(--muted); }
+  .check-result.warn { color: var(--amber); }
+  .check-detail { color: var(--muted); font-size: 12.5px; margin-top: 4px; overflow-wrap: anywhere; }
+  .check-detail a { color: var(--green-dark); font-weight: 500; }
+  .tool-line { margin-top: 4px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .chip { font-size: 12px; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted-2); background: var(--bg); }
+  .chip.on { color: var(--green-deep); border-color: var(--lime); background: var(--lime-tint); font-weight: 600; }
+
+  .actions { display: flex; gap: 10px; margin-top: 20px; }
+  .actions a, .actions button {
+    flex: 1; text-align: center; text-decoration: none; font-size: 13.5px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 999px;
+  }
+  .btn-secondary { background: var(--bg); border: 1px solid var(--border); color: var(--text); }
+  .btn-secondary:hover { border-color: var(--green); color: var(--green-dark); }
+  .btn-secondary:disabled { opacity: 0.5; cursor: default; border-color: var(--border); color: var(--text); }
+  .btn-done, .btn-done:disabled { opacity: 1; border-color: var(--lime); background: var(--lime-tint); color: var(--green-deep); }
+
+  .spinner {
+    width: 15px; height: 15px; border: 2px solid var(--border);
+    border-top-color: var(--green); border-radius: 50%; display: inline-block;
+    animation: spin 0.7s linear infinite; vertical-align: -3px; margin-right: 8px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  footer { text-align: center; color: var(--muted-2); font-size: 12px; padding: 30px 0 10px; }
+  footer b { color: var(--muted); }
+
+  @media (max-width: 520px) {
+    nav { padding: 14px 16px; }
+    .brand-sub { display: none; }
+    .wrap { padding: 36px 16px 60px; }
+    .search-row { flex-direction: column; }
+    .actions { flex-direction: column; }
+    .actions a, .actions button { padding: 13px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">
+    <div class="brand-mark">A</div>
+    Anaconda <span class="brand-sub">Prospect Research</span>
+  </div>
+  <div class="nav-tag">AI-Powered</div>
+</nav>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">Anaconda Prospect Research</div>
+    <h1>Research and qualify any contact <span class="accent">in minutes</span></h1>
+    <p class="subtitle">
+      Paste a LinkedIn profile URL below and we'll pull their profile and company details,
+      check whether their company uses AI and which of Anaconda's partner platforms they run on, then generate
+      a quick summary and a suggested outreach angle.
+    </p>
+  </div>
+
+  <div class="search-card">
+    <div class="field-label">LinkedIn Profile URL</div>
+    <div class="search-row">
+      <input type="text" id="linkedin-url" placeholder="https://www.linkedin.com/in/jane-doe/" />
+      <button id="research-btn">&#128269; Research</button>
+    </div>
+    <div class="hint">Each search takes up to a few minutes to fully enrich.</div>
+  </div>
+
+  <div id="status"></div>
+  <div id="error"></div>
+
+  <div class="empty-state" id="empty-state">
+    <div class="glyph">&#128100;</div>
+    <p>No contact researched yet — paste a LinkedIn URL above to get started.</p>
+  </div>
+
+  <div class="card" id="card">
+    <div class="profile-header">
+      <div class="avatar" id="avatar">--</div>
+      <div>
+        <p class="profile-name" id="name">--</p>
+        <p class="profile-sub" id="title-company">--</p>
+      </div>
+      <span class="badge" id="email-badge" style="display:none;">&#10003; Email found</span>
+    </div>
+
+    <div class="rows">
+      <div class="row"><span class="icon">&#9993;</span><span id="email">--</span></div>
+      <div class="row"><span class="icon">&#128205;</span><span id="location">--</span></div>
+    </div>
+
+    <div class="box qual-box">
+      <div class="qual-head">
+        <div class="box-label">&#9989; Qualification</div>
+        <span class="verdict" id="verdict">--</span>
+      </div>
+      <div class="check">
+        <div class="check-title"><span>Uses AI</span><span class="check-result" id="ai-result">--</span></div>
+        <div class="check-detail" id="ai-detail"></div>
+      </div>
+      <div class="check">
+        <div class="check-title"><span>Partner platforms</span><span class="check-result" id="stack-result">--</span></div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="box-label">&#10024; About</div>
+      <div id="about">--</div>
+    </div>
+    <div class="box outreach-box">
+      <div class="box-label">&#127919; Outreach Angle</div>
+      <div id="outreach-angle">--</div>
+    </div>
+
+    <div class="actions">
+      <button class="btn-secondary" id="hubspot-btn">Add to HubSpot</button>
+      <a class="btn-secondary" id="email-btn">Email this person</a>
+    </div>
+  </div>
+
+  <footer><b>Anaconda Prospect Research</b> · built by aishastreamlines</footer>
+</div>
+
+<script>
+const urlInput = document.getElementById('linkedin-url');
+const researchBtn = document.getElementById('research-btn');
+const statusEl = document.getElementById('status');
+const errorEl = document.getElementById('error');
+const card = document.getElementById('card');
+const emptyState = document.getElementById('empty-state');
+
+let lastResult = null;
+
+researchBtn.addEventListener('click', async () => {
+  const linkedinUrl = urlInput.value.trim();
+  if (!linkedinUrl) return;
+
+  errorEl.style.display = 'none';
+  card.classList.remove('visible');
+  emptyState.classList.add('hidden');
+  researchBtn.disabled = true;
+  statusEl.innerHTML = '<span class="spinner"></span>Researching… this can take up to a couple of minutes.';
+
+  try {
+    const resp = await fetch('/research', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ linkedin_url: linkedinUrl }),
+    });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.error || 'Research failed');
+    lastResult = { ...data, linkedin_url: linkedinUrl };
+    renderCard(data);
+    statusEl.textContent = '';
+  } catch (err) {
+    errorEl.textContent = err.message;
+    errorEl.style.display = 'block';
+    statusEl.textContent = '';
+    emptyState.classList.remove('hidden');
+  } finally {
+    researchBtn.disabled = false;
+  }
+});
+
+function renderCard(data) {
+  document.getElementById('name').textContent = data.name || 'Unknown';
+  document.getElementById('title-company').textContent =
+    [data.title, data.company].filter(Boolean).join(' at ') || '--';
+  document.getElementById('avatar').textContent = (data.name || '?')
+    .split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+
+  document.getElementById('email').textContent = data.email || 'Not found';
+  document.getElementById('email-badge').style.display = data.email ? 'inline-flex' : 'none';
+  document.getElementById('location').textContent = data.location || '--';
+  document.getElementById('about').textContent = data.about || '--';
+  document.getElementById('outreach-angle').textContent = data.outreach_angle || '--';
+
+  renderQualification(data);
+
+  const emailBtn = document.getElementById('email-btn');
+  if (data.email) {
+    emailBtn.href = `mailto:${data.email}`;
+    emailBtn.style.pointerEvents = 'auto';
+    emailBtn.style.opacity = '1';
+  } else {
+    emailBtn.removeAttribute('href');
+    emailBtn.style.pointerEvents = 'none';
+    emailBtn.style.opacity = '0.5';
+  }
+
+  const hubspotBtn = document.getElementById('hubspot-btn');
+  hubspotBtn.classList.remove('btn-done');
+  hubspotBtn.disabled = !data.email;
+  hubspotBtn.textContent = 'Add to HubSpot';
+  hubspotBtn.title = data.email ? '' : 'No email found, so this contact can\'t be added';
+
+  card.classList.add('visible');
+}
+
+const VERDICTS = {
+  qualified: '✓ Qualified',
+  not_qualified: 'Not qualified',
+  incomplete: 'Incomplete',
+};
+// Anaconda's partner platforms, in the order the card lists them.
+const TARGET_TOOLS = ['AWS', 'Microsoft Azure', 'Google Cloud', 'Oracle Cloud', 'Databricks', 'Snowflake'];
+
+function setResult(el, text, kind) {
+  el.textContent = text;
+  el.className = 'check-result ' + kind;
+}
+
+function renderQualification(data) {
+  const verdict = document.getElementById('verdict');
+  verdict.textContent = VERDICTS[data.qualification] || '--';
+  verdict.className = 'verdict ' + (data.qualification || 'incomplete');
+
+  // Layer 1: AI adoption
+  const aiResult = document.getElementById('ai-result');
+  const aiDetail = document.getElementById('ai-detail');
+  aiDetail.textContent = '';
+  if (data.uses_ai === 'yes') {
+    setResult(aiResult, 'Yes', 'pass');
+    aiDetail.append(data.ai_evidence || '');
+    if (/^https?:\/\//.test(data.ai_source_url || '')) {
+      const link = document.createElement('a');
+      link.href = data.ai_source_url;
+      link.target = '_blank';
+      link.rel = 'noopener';
+      link.textContent = 'Source';
+      aiDetail.append(' ', link);
+    }
+  } else if (data.uses_ai === 'no_evidence') {
+    setResult(aiResult, 'No evidence found', 'fail');
+    aiDetail.textContent = 'Checked their website and the web. Nothing showed AI in their product or systems.';
+  } else {
+    setResult(aiResult, "Couldn't check", 'warn');
+  }
+
+  // Layer 2: Anaconda partner platforms, e.g. "AWS, Google Cloud" or "None found".
+  const stack = data.tech_stack || {};
+  const found = stack.found || {};
+  const stackResult = document.getElementById('stack-result');
+  if (!stack.checked) {
+    setResult(stackResult, "Couldn't check", 'warn');
+    return;
+  }
+  const foundNames = TARGET_TOOLS.filter(t => found[t]);
+  setResult(stackResult, foundNames.length ? foundNames.join(', ') : 'None found', foundNames.length ? 'pass' : 'fail');
+}
+
+document.getElementById('hubspot-btn').addEventListener('click', async (e) => {
+  const btn = e.currentTarget;
+  if (!lastResult) return;
+  btn.disabled = true;
+  btn.textContent = 'Adding…';
+  errorEl.style.display = 'none';
+  try {
+    const resp = await fetch('/add-to-hubspot', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(lastResult),
+    });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.error || 'Could not add to HubSpot');
+    btn.classList.add('btn-done');
+    btn.textContent = data.note_added ? '✓ Added to HubSpot' : '✓ Added (research note failed)';
+  } catch (err) {
+    errorEl.textContent = err.message;
+    errorEl.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Add to HubSpot';
+  }
+});
+</script>
+</body>
+</html>
