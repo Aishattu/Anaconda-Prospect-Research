@@ -2,8 +2,6 @@
 
 Paste a LinkedIn URL. Get the prospect's profile, verified work email, an AI-written summary and outreach angle, and a clear verdict on whether their company is a good fit for Anaconda. Then save it all to HubSpot in one click.
 
-**Live demo:**
-
 ## The problem
 
 Before reaching out, a rep has to research the person, find their email, figure out what the company does, and decide if the account is even worth contacting. For Anaconda, a good-fit account is one that uses AI and runs on one of Anaconda's partner platforms. Checking that by hand means digging through the company website, job posts and tech stack tools for every single prospect.
