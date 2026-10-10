@@ -4,7 +4,9 @@ Paste a LinkedIn URL. Get the prospect's profile, verified work email, an AI-wri
 
 ## The problem
 
-Before reaching out, a rep has to research the person, find their email, figure out what the company does, and decide if the account is even worth contacting. For Anaconda, a good-fit account is one that uses AI and runs on one of Anaconda's partner platforms. Checking that by hand means digging through the company website, job posts and tech stack tools for every single prospect.
+
+Imagine you're scrolling LinkedIn and a profile catches your eye. To know if that person is worth reaching out to, you'd normally have to enrich the lead, find their email, read up on their company, work out what it does, and check whether it uses AI and which platforms it runs on. That means jumping from one tool to the next for every single prospect.
+With this app, you just paste the LinkedIn profile URL. It does all of that for you and comes back with one clear answer
 
 ## What it does
 
