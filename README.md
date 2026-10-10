@@ -2,6 +2,14 @@
 
 Paste a LinkedIn URL. Get the prospect's profile, verified work email, an AI-written summary and outreach angle, and a clear verdict on whether their company is a good fit for Anaconda. Then save it all to HubSpot in one click.
 
+Paste a LinkedIn profile URL and hit Research:
+
+![The search box with a LinkedIn URL pasted in, and the top of the result card showing the prospect's name and title](screenshots/search.png)
+
+The result card shows the qualification verdict with its evidence, a short summary and an outreach angle:
+
+![The result card showing a Qualified verdict, the AI evidence, partner platforms found, the About summary and the outreach angle](screenshots/result.png)
+
 ## The problem
 
 
