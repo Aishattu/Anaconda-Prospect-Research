@@ -1,8 +1,18 @@
 # Anaconda Prospect Research Agent
 
-Paste a LinkedIn URL. Get the prospect's profile, verified work email, an AI-written summary and outreach angle, and a clear verdict on whether their company is a good fit for Anaconda. Then save it all to HubSpot in one click.
+## The problem
+
+Imagine you're scrolling LinkedIn and a profile catches your eye. To know if that person is worth reaching out to, you'd normally have to enrich the lead, find their email, read up on their company, work out what it does, and check whether it uses AI and which platforms it runs on. That means jumping from one tool to the next for every single prospect.
+With this app, you just paste the LinkedIn profile URL. It does all of that for you and comes back with one clear answer
 
 Paste a LinkedIn profile URL and hit Research:
+
+One search returns:
+
+- **Who they are:** name, title, company, location, and verified work email.
+- **About:** two or three sentences on who the person is, what they do and what their company does, written from their profile and the company's own website.
+- **Outreach angle:** one specific angle based on their real background.
+- **Qualification verdict:** Qualified, Not qualified, or Incomplete, with the evidence behind it.
 
 ![The search box with a LinkedIn URL pasted in, and the top of the result card showing the prospect's name and title](screenshots/search.png)
 
@@ -10,22 +20,8 @@ The result card shows the qualification verdict with its evidence, a short summa
 
 ![The result card showing a Qualified verdict, the AI evidence, partner platforms found, the About summary and the outreach angle](screenshots/result.png)
 
-## The problem
 
-
-Imagine you're scrolling LinkedIn and a profile catches your eye. To know if that person is worth reaching out to, you'd normally have to enrich the lead, find their email, read up on their company, work out what it does, and check whether it uses AI and which platforms it runs on. That means jumping from one tool to the next for every single prospect.
-With this app, you just paste the LinkedIn profile URL. It does all of that for you and comes back with one clear answer
-
-## What it does
-
-One search returns:
-
-- **Who they are:** name, title, company, location and verified work email.
-- **About:** two or three sentences on who the person is, what they do and what their company does, written from their profile and the company's own website.
-- **Outreach angle:** one specific angle based on their real background.
-- **Qualification verdict:** Qualified, Not qualified, or Incomplete, with the evidence behind it.
-
-## How qualification works
+##  Qualification criteria for this tool
 
 A company is **qualified** when both checks pass:
 
